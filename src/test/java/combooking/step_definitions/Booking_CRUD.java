@@ -51,8 +51,7 @@ public class Booking_CRUD {
 
     @Then("user should get the response code {int}")
     public void user_should_get_the_response_code(Integer statusCode) {
-        System.out.println(bookingUtility.response.getStatusCode());
-        assertEquals(Long.valueOf(statusCode), Long.valueOf(bookingUtility.response.getStatusCode()));
+           assertEquals(Long.valueOf(statusCode), Long.valueOf(bookingUtility.response.getStatusCode()));
     }
 
     @When("the user books a room with the mentioned booking details")
@@ -84,7 +83,6 @@ public class Booking_CRUD {
 
     @When("the user finds booking details with booking ID")
     public void theUserRetrievesBookingWithBookingID() {
-        System.out.println("Booking ID: "+bookingUtility.getBookingId());
         Integer fetchedBookingId = bookingUtility.getBookingId();
         if (fetchedBookingId != null) {
             response = bookingUtility
@@ -101,7 +99,6 @@ public class Booking_CRUD {
     public void theUserUpdatesTheBookingWithFollowingDetails(final DataTable dataTable) {
         for (Map<String, String> data : dataTable.asMaps(String.class, String.class)) {
             requestBody = createBookingRequestBody(data, Integer.parseInt(generateRandomRoomId()));
-            System.out.println(requestBody);
             response = bookingUtility
                         .requestSetup()
                         .cookie(bookingUtility.getToken())
