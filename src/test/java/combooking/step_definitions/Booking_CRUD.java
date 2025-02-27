@@ -2,6 +2,7 @@ package combooking.step_definitions;
 
 import combooking.support.BookingUtility;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -142,6 +143,23 @@ public class Booking_CRUD {
         } else {
             throw new RuntimeException("Booking ID not available for GET request.");
         }
+    }
+
+    @When("the user tries to books a room with invalid booking details")
+    public void the_user_tries_to_books_a_room_with_invalid_booking_details(final DataTable dataTable) {
+        List<Map<String, String>> data = dataTable.asMaps(String.class, String.class);
+        for (Map<String, String> row : data) {
+            int roomid = Integer.parseInt(generateRandomRoomId());
+            bookingUtility.setRoomId(roomid);
+            requestBody = createBookingRequestBody(row, roomid);
+            response = bookingUtility.requestSetup().body(requestBody.toString()).when().post(bookingUtility.getEndPoint());
+        }
+    }
+
+    @And("the user should see response with incorrect {string}")
+    public void theUserShouldSeeTheResponseWithIncorrectField(final String errorMessage) {
+        final String actualErrorMessage = response.jsonPath().getString("fieldErrors");
+        assertEquals("Error message mismatch", errorMessage, actualErrorMessage);
     }
 
     private static String generateRandomRoomId() {
