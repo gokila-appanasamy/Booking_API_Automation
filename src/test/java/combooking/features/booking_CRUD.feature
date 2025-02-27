@@ -16,6 +16,10 @@ Feature: End to End Booking Tests
     Then the response status code should be 201
     When the user finds booking details with booking ID
     Then the response status code should be 200
+    When the user updates the booking with booking details
+      | firstname | lastname | email              | phone         | checkin    | checkout   |
+      | Auto      | mation   | auto.mat@gmail.com | 1234567890099 | 2025-04-21 | 2025-04-23 |
+    Then the response status code should be 200
 
     Examples:
       | firstname | lastname | email              | phone         | checkin    | checkout   |

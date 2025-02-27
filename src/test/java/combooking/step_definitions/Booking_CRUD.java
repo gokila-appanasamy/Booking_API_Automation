@@ -1,6 +1,7 @@
 package combooking.step_definitions;
 
 import combooking.support.BookingUtility;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -53,7 +54,7 @@ public class Booking_CRUD {
     }
 
     @When("the user books a room with the mentioned booking details")
-    public void the_user_books_a_room_with_the_mentioned_booking_details(io.cucumber.datatable.DataTable dataTable) {
+    public void the_user_books_a_room_with_the_mentioned_booking_details(final DataTable dataTable) {
 
         List<Map<String, String>> data = dataTable.asMaps(String.class, String.class);
         for (Map<String, String> row : data) {
@@ -87,6 +88,21 @@ public class Booking_CRUD {
                     .when().get(bookingUtility.getEndPoint()+ fetchedBookingId);
         } else {
             throw new RuntimeException("Booking ID not available for GET request.");
+        }
+    }
+
+    @When("the user updates the booking with booking details")
+    public void theUserUpdatesTheBookingWithFollowingDetails(final DataTable dataTable) {
+        for (Map<String, String> data : dataTable.asMaps(String.class, String.class)) {
+            requestBody = createBookingRequestBody(data, Integer.parseInt(generateRandomRoomId()));
+            System.out.println(requestBody);
+            response = bookingUtility.requestSetup().cookie(bookingUtility.getToken()).body(requestBody.toString())
+                    .when().put(bookingUtility.getEndPoint() + bookingUtility.getBookingId());
+            String updatedLastname = response.jsonPath().getString("booking.lastname");
+            if (response.statusCode() == 200) {
+                assertEquals("Expected lastname to be " + data.get("lastname") + " but got " + updatedLastname,
+                        data.get("lastname"), updatedLastname);
+            }
         }
     }
 
