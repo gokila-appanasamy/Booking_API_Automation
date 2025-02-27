@@ -7,6 +7,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.http.Cookie;
 import io.restassured.http.Cookies;
+import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
 import org.json.JSONObject;
 import static org.junit.Assert.assertEquals;
@@ -127,6 +128,11 @@ public class Booking_CRUD {
         } else {
             throw new RuntimeException("Booking ID not available for Delete request.");
         }
+    }
+
+    @Then("validate the response with JSON schema {string}")
+    public void validate_the_response_with_response_json_schema(String schemaFileName) {
+        response.then().assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/" + schemaFileName));
     }
 
     private static String generateRandomRoomId() {
