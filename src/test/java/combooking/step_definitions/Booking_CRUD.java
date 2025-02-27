@@ -54,12 +54,16 @@ public class Booking_CRUD {
 
     @When("the user books a room with the mentioned booking details")
     public void the_user_books_a_room_with_the_mentioned_booking_details(io.cucumber.datatable.DataTable dataTable) {
+
         List<Map<String, String>> data = dataTable.asMaps(String.class, String.class);
         for (Map<String, String> row : data) {
             int roomid = Integer.parseInt(generateRandomRoomId());
             bookingUtility.setRoomId(roomid);
             requestBody = createBookingRequestBody(row, roomid);
-            response = bookingUtility.requestSetup().body(requestBody.toString()).when().post(bookingUtility.getEndPoint());
+            response = bookingUtility.requestSetup()
+                        .body(requestBody.toString())
+                        .when()
+                        .post(bookingUtility.getEndPoint());
             validateBookingResponse(row.get("firstname"), row.get("lastname"), row.get("checkin"), row.get("checkout"));
 
             if (response.getStatusCode() == 201) {
@@ -72,6 +76,18 @@ public class Booking_CRUD {
     @Then("the response status code should be {int}")
     public void the_response_status_code_should_be(int expectedStatusCode) {
         assertEquals(expectedStatusCode, response.getStatusCode());
+    }
+
+    @When("the user finds booking details with booking ID")
+    public void theUserRetrievesBookingWithBookingID() {
+        System.out.println("Booking ID: "+bookingUtility.getBookingId());
+        Integer fetchedBookingId = bookingUtility.getBookingId();
+        if (fetchedBookingId != null) {
+            response = bookingUtility.requestSetup().cookie(bookingUtility.getToken())
+                    .when().get(bookingUtility.getEndPoint()+ fetchedBookingId);
+        } else {
+            throw new RuntimeException("Booking ID not available for GET request.");
+        }
     }
 
     private static String generateRandomRoomId() {

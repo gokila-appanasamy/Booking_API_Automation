@@ -14,6 +14,8 @@ Feature: End to End Booking Tests
       | firstname   | lastname   | email   | phone   | checkin   | checkout   |
       | <firstname> | <lastname> | <email> | <phone> | <checkin> | <checkout> |
     Then the response status code should be 201
+    When the user finds booking details with booking ID
+    Then the response status code should be 200
 
     Examples:
       | firstname | lastname | email              | phone         | checkin    | checkout   |
