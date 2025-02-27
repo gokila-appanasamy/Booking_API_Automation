@@ -11,7 +11,7 @@ import io.cucumber.junit.CucumberOptions;
         glue = "combooking.step_definitions", dryRun=true,
         plugin = {"pretty", "html:target/cucumber-reports.html"},
         monochrome = true,
-        tags = "@bookingE2ETest"
+        tags = "@business"
 
 )
 

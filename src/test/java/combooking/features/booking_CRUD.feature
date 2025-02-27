@@ -1,4 +1,4 @@
-@bookingE2ETest
+@business
 
 Feature: End to End Booking Tests
   Background: To perform a CRUD operation on booking API
@@ -20,6 +20,8 @@ Feature: End to End Booking Tests
       | firstname | lastname | email              | phone         | checkin    | checkout   |
       | Auto      | mation   | auto.mat@gmail.com | 1234567890099 | 2025-04-21 | 2025-04-23 |
     Then the response status code should be 200
+    When the user deletes the booking with booking ID
+    Then the response status code should be 202
 
     Examples:
       | firstname | lastname | email              | phone         | checkin    | checkout   |

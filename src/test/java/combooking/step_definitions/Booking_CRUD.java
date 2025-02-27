@@ -65,6 +65,7 @@ public class Booking_CRUD {
                         .body(requestBody.toString())
                         .when()
                         .post(bookingUtility.getEndPoint());
+
             validateBookingResponse(row.get("firstname"), row.get("lastname"), row.get("checkin"), row.get("checkout"));
 
             if (response.getStatusCode() == 201) {
@@ -84,8 +85,11 @@ public class Booking_CRUD {
         System.out.println("Booking ID: "+bookingUtility.getBookingId());
         Integer fetchedBookingId = bookingUtility.getBookingId();
         if (fetchedBookingId != null) {
-            response = bookingUtility.requestSetup().cookie(bookingUtility.getToken())
-                    .when().get(bookingUtility.getEndPoint()+ fetchedBookingId);
+            response = bookingUtility
+                        .requestSetup()
+                        .cookie(bookingUtility.getToken())
+                        .when()
+                        .get(bookingUtility.getEndPoint()+ fetchedBookingId);
         } else {
             throw new RuntimeException("Booking ID not available for GET request.");
         }
@@ -96,13 +100,32 @@ public class Booking_CRUD {
         for (Map<String, String> data : dataTable.asMaps(String.class, String.class)) {
             requestBody = createBookingRequestBody(data, Integer.parseInt(generateRandomRoomId()));
             System.out.println(requestBody);
-            response = bookingUtility.requestSetup().cookie(bookingUtility.getToken()).body(requestBody.toString())
-                    .when().put(bookingUtility.getEndPoint() + bookingUtility.getBookingId());
+            response = bookingUtility
+                        .requestSetup()
+                        .cookie(bookingUtility.getToken())
+                        .body(requestBody.toString())
+                        .when()
+                        .put(bookingUtility.getEndPoint() + bookingUtility.getBookingId());
+
             String updatedLastname = response.jsonPath().getString("booking.lastname");
             if (response.statusCode() == 200) {
                 assertEquals("Expected lastname to be " + data.get("lastname") + " but got " + updatedLastname,
                         data.get("lastname"), updatedLastname);
             }
+        }
+    }
+
+    @When("the user deletes the booking with booking ID")
+    public void theUserDeletesTheBookingWithBookingID() {
+        Integer fetchedBookingId = bookingUtility.getBookingId();
+        if (fetchedBookingId != null) {
+            response = bookingUtility
+                        .requestSetup()
+                        .cookie(bookingUtility.getToken())
+                        .when()
+                        .delete(bookingUtility.getEndPoint() + fetchedBookingId);
+        } else {
+            throw new RuntimeException("Booking ID not available for Delete request.");
         }
     }
 
