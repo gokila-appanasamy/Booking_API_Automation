@@ -9,6 +9,7 @@ import io.restassured.http.Cookie;
 import io.restassured.http.Cookies;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONObject;
 import static org.junit.Assert.assertEquals;
 
@@ -133,6 +134,17 @@ public class Booking_CRUD {
     @Then("validate the response with JSON schema {string}")
     public void validate_the_response_with_response_json_schema(String schemaFileName) {
         response.then().assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/" + schemaFileName));
+    }
+
+    @When("the user searches booking details with invalid booking ID")
+    public void the_user_searches_booking_details_with_invalid_booking_ID() {
+        Integer dummyBookingId = Integer.parseInt(RandomStringUtils.randomNumeric(5));
+        if (dummyBookingId != null) {
+            response = bookingUtility.requestSetup().cookie(bookingUtility.getToken())
+                    .when().get(bookingUtility.getEndPoint()+ dummyBookingId);
+        } else {
+            throw new RuntimeException("Booking ID not available for GET request.");
+        }
     }
 
     private static String generateRandomRoomId() {
