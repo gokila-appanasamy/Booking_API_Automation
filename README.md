@@ -12,7 +12,6 @@ This Booking API Automation project is a REST API automation framework built usi
 Automated API Testing using Rest Assured Behavior-Driven Development (BDD) with Cucumber Schema Validation for API responses Logging Support for better debugging Maven-based dependency management
 
 
-
 ## Tech Stack
 
 | Technology             | Purpose                                                                |
