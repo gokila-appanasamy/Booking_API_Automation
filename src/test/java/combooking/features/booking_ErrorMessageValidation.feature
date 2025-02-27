@@ -21,4 +21,3 @@ Feature: End to End Booking Tests
       | Goki      | API      | john               | 879558797034 | 2025-03-15 | 2025-03-18 | [must be a well-formed email address] |
       | Goki      | API      | api.xyz@gmail.com  | 8795587970   | 2025-03-15 | 2025-03-18 | [size must be between 11 and 21]      |
       | Goki      | API      | api.xyz@gmail.com  | 879558797034 |            | 2025-03-18 | [must not be null]                    |
-
