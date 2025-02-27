@@ -50,10 +50,6 @@ Cucumber Reports are generated at target/cucumber-reports/ This reports can be o
 | ----------------- | ------------------------------------------------------------------ |
 | Maven Compiler Plugin | Compiles Java Code |
 | Maven Surefire Plugin| Runs Cucumber Test|
-| Lombok | BDD Test Framework|
-| Rest Assured | API Automation |
-| JSON Schema Validator | API Response Validation |
-| Lombok Annotation Processor| Enables Lombok Support |
 
 ## Tech Stack
 
@@ -73,7 +69,6 @@ Cucumber Reports are generated at target/cucumber-reports/ This reports can be o
 | Cucumber Java | Step Definitions  |
 | Cucumber JUnit | Test Execution |
 | Rest Assured | API Automation |
-| SON Schema Validator | Response Validation |
 | JSON Schema Validator | API Response Validation |
 | Lombok | Reduces boilerplate code by using annotations |
 
@@ -85,6 +80,5 @@ Cucumber Reports are generated at target/cucumber-reports/ This reports can be o
 structure
 
 ✔ Tag-Based Execution - Run specific test groups easily
-
 ## Improvements
 This framework can also be implemented with openApi for better enhancement
