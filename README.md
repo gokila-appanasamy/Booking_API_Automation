@@ -18,20 +18,6 @@ Rest Assured -	API Automation
 JSON Schema Validator -	API Response Validation
 Lombok	-	Reduces Boilerplate Code using annotations
 
-**Project Structure**
-
-hotelbooking-api-automation/
-│── src/
-│   ├── test/
-│   │   ├── java/combooking/Testrunner/          # Cucumber Test Runner
-│   │   ├── java/combooking/step_definitions/ # Step Definitions
-│   │   ├── java/combooking/support/           # Utility Classes and properties file
-│   │   ├── java/combooking/features             # Cucumber Feature Files
-│   │   ├── java/combooking/constants             # application.properties file which has BaseURI
-│   ├── resources/schemas            # json files for schema validation
-│── pom.xml
-│── README.md
-
 **Prerequisites:**
 Swagger Documentation
 Install:
