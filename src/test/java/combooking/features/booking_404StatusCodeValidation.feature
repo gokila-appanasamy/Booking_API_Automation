@@ -1,4 +1,4 @@
-@errorValidation
+@error
 
 Feature: Booking not found validation
   Background: To validate 404 status code
